@@ -1,30 +1,30 @@
-import { ChangeEvent, KeyboardEvent } from 'react';
+import React, { useState } from "react";
+import { TextField } from "@mui/material";
 
-type Props = {
-    value: string;
-    onChange: (value: string) => void;
-    onSubmit: () => void;
-};
+interface InputFieldProps {
+    addTask: (text: string) => void;
+}
 
-const InputField = ({ value, onChange, onSubmit }: Props) => {
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') onSubmit();
+const InputField: React.FC<InputFieldProps> = ({ addTask }) => {
+    const [text, setText] = useState("");
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter" && text.trim()) {
+            addTask(text.trim());
+            setText("");
+        }
     };
 
     return (
-        <div style={{ marginBottom: '20px' }}>
-            <input
-                type="text"
-                value={value}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Новая задача"
-                style={{ padding: '8px', width: 'calc(100% - 20px)' }}
-            />
-            <button onClick={onSubmit} style={{ padding: '8px 16px' }}>
-                Добавить
-            </button>
-        </div>
+        <TextField
+            fullWidth
+            variant="outlined"
+            placeholder="What needs to be done?"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            sx={{ mb: 2 }}
+        />
     );
 };
 

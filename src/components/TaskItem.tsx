@@ -1,30 +1,35 @@
-import {Task} from "../App";
+import React from "react";
+import { Task } from "../types/task";
+import { motion } from "framer-motion";
+import { ListItem, ListItemText, Checkbox } from "@mui/material";
 
-type Props = {
+interface TaskItemProps {
     task: Task;
-    onToggle: (id: string) => void;
-};
+    toggleTask: (id: number) => void;
+}
 
-const TaskItem = ({ task, onToggle }: Props) => (
-    <li style={{
-        padding: '8px',
-        borderBottom: '1px solid #ccc',
-        display: 'flex',
-        alignItems: 'center'
-    }}>
-        <input
-            type="checkbox"
-            checked={task.completed}
-            onChange={() => onToggle(task.id)}
-            style={{ marginRight: '8px' }}
-        />
-        <span style={{
-            textDecoration: task.completed ? 'line-through' : 'none',
-            flex: 1
-        }}>
-      {task.text}
-    </span>
-    </li>
-);
+const TaskItem: React.FC<TaskItemProps> = ({ task, toggleTask }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 50 }}
+            layout
+        >
+            <ListItem
+                onClick={() => toggleTask(task.id)}
+                sx={{
+                    border: '1px solid #ccc',
+                    textDecoration: task.completed ? "line-through" : "none",
+                    color: task.completed ? "rgba(0, 0, 0, 0.6)" : "inherit",
+                    cursor: "pointer",
+                }}
+            >
+                <Checkbox checked={task.completed} />
+                <ListItemText primary={task.text} />
+            </ListItem>
+        </motion.div>
+    );
+};
 
 export default TaskItem;
