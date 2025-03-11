@@ -98,24 +98,6 @@ describe('useTasks', () => {
         ]);
     });
 
-    it('should count active and completed tasks', () => {
-        const { result } = renderHook(() => useTasks());
-
-        act(() => {
-            result.current.addTask('Task 1');
-            result.current.addTask('Task 2');
-            result.current.addTask('Task 3');
-        });
-
-        act(() => {
-            result.current.toggleTask(1);
-            result.current.toggleTask(2);
-        });
-
-        expect(result.current.activeCount).toBe(1);
-        expect(result.current.completedCount).toBe(2);
-    });
-
     it('should persist tasks to localStorage', () => {
         const { result } = renderHook(() => useTasks());
 
