@@ -1,15 +1,17 @@
-import { useState, useMemo } from 'react';
+import {useState, useMemo, useRef} from 'react';
 import useLocalStorage from './useLocalStorage';
 import {Task} from "../types/task";
 
 const useTasks = () => {
     const [tasks, setTasks] = useLocalStorage<Task[]>('tasks', []);
     const [filter, setFilter] = useState<'All' | 'Active' | 'Completed'>('All');
+    const nextId = useRef(1);
 
     const addTask = (text: string) => {
+        if (!text.trim()) return;
         const newTask: Task = {
-            id: Date.now(),
-            text,
+            id: nextId.current++,
+            text: text.trim(),
             completed: false,
         };
         setTasks(prev => [...prev, newTask]);
