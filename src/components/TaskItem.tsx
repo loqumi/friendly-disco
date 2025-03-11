@@ -19,9 +19,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, toggleTask }) => {
             <ListItem
                 onClick={() => toggleTask(task.id)}
                 sx={{
-                    border: '1px solid #ccc',
-                    textDecoration: task.completed ? "line-through" : "none",
-                    color: task.completed ? "rgba(0, 0, 0, 0.6)" : "inherit",
+                    textDecoration: task.completed ? 'line-through' : 'none',
+                    transition: 'transform 0.2s',
+                    '&:hover': { transform: 'translateY(-2px)' },
                     cursor: "pointer",
                 }}
             >

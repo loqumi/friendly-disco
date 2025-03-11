@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import useTasks from "./hooks/useTasks";
 import TaskList from "./components/TaskList";
 import InputField from "./components/InputField";
@@ -6,12 +6,16 @@ import TabPanel from "./components/TabPanel";
 import { CssBaseline, Container, Typography } from "@mui/material";
 
 const App: React.FC = () => {
-    const { tasks, addTask, toggleTask, clearCompleted, filter, setFilter } = useTasks();
-
-    const { activeCount, completedCount } = useMemo(() => ({
-        activeCount: tasks.filter(task => !task.completed).length,
-        completedCount: tasks.filter(task => task.completed).length
-    }), [tasks]);
+    const {
+        tasks,
+        activeCount,
+        completedCount,
+        filter,
+        setFilter,
+        addTask,
+        toggleTask,
+        clearCompleted
+    } = useTasks();
 
     return (
         <>
@@ -21,7 +25,11 @@ const App: React.FC = () => {
                     todos
                 </Typography>
                 <InputField addTask={addTask} />
-                <TaskList tasks={tasks} toggleTask={toggleTask} filter={filter} />
+                <TaskList
+                    tasks={tasks}
+                    toggleTask={toggleTask}
+                    filter={filter}
+                />
                 <TabPanel
                     activeCount={activeCount}
                     completedCount={completedCount}
